@@ -36,6 +36,7 @@ public:
 
     // prints out customer history in order of most recently checked out
     void displayHistory();
+    void print();
 
 };
 
@@ -64,6 +65,10 @@ void Customer::displayHistory() {
         cur->printItem();
         cur = cur->nextRental;
     }
+}
+
+void Customer::print() {
+    cout << this->id << " " << this->lastName << " " << this->firstName << endl;
 }
 
 #endif //ASSIGNMENT4_CUSTOMER_H

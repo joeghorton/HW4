@@ -22,15 +22,28 @@ public:
     ~DramaMovie();
 
     // comparison method specific to this type of movie
-    int compareTo(const DramaMovie &other);
+    bool operator <(const DramaMovie& other) const;
+    bool operator >(const DramaMovie& other) const;
 };
 
 DramaMovie::~DramaMovie() {
 
 }
 
-int DramaMovie::compareTo(const DramaMovie &other) {
-    return 0;
+bool DramaMovie::operator <(const DramaMovie& other) const {
+    if (this->director == other.director) { // secondary sort precedence
+        return this->title < other.title;
+    } else { // primary sort precedence
+        return this->director < other.director;
+    }
+}
+
+bool DramaMovie::operator >(const DramaMovie& other) const {
+    if (this->director == other.director) { // secondary sort precedence
+        return this->title > other.title;
+    } else { // primary sort precedence
+        return this->director > other.director;
+    }
 }
 
 

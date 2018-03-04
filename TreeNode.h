@@ -9,10 +9,10 @@
 // within the category. It does not contain any features because
 // we are using this class only as a way to connect items together
 
-class TreeNode{
+class TreeNode {
 
 public:
-    Item* val; // points to specific item within
+    Item* item; // points to specific item within
     TreeNode* left; // points to TreeNodes that are 'less than' this one
     TreeNode* right; // points to TreeNodes that are 'greater than' this one
 
@@ -22,7 +22,17 @@ public:
     // destructor
     ~TreeNode();
 
-
 };
 
+TreeNode::TreeNode() {
+    this->item = NULL;
+    this->left = NULL;
+    this->right = NULL;
+}
+
+TreeNode::~TreeNode() {
+
+}
+
 #endif //ASSIGNMENT4_TREENODE_H
+

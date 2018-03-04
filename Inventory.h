@@ -10,7 +10,7 @@ using namespace std;
 
 
 class Inventory {
-   const int MAX_CUST = 10000; //customers have a 4 digit ID
+    static const int MAX_CUST = 10000; //customers have a 4 digit ID
 
 private:
 
@@ -23,17 +23,19 @@ private:
 public:
     Inventory(); //empty constructor
     ~Inventory();
-    void readInInventory(std::ifstream& file); //read in inventory from file
-    void readInCustomers(std::ifstream& file); //read in customers from file
-    void readInCommands(std::ifstream& file); // read in commands from file
 
-    void printInventory();
 
-    bool addMediaType(char identifier); //used to add media type so then data valid
+    void print();
 
-    bool addCategory(char indentifier); //used to add category to media
+    bool addMediaType(char id); //used to add media type so then data valid
 
-    bool addCustomer(int customerID); // used to add customer to database.
+    bool addCategory(char medID, char catID); //used to add category to media
+
+    bool isValidCategory(char medID, char catID);
+
+    bool addCustomer(int id, string firstName, string lastName); // used to add customer to database.
+
+    bool addItem(char medID, char catID, Item* item);
 
 };
 
@@ -45,36 +47,64 @@ Inventory::~Inventory() {
 
 }
 
-void Inventory::readInInventory(ifstream &file) {
-
-}
-
-void Inventory::readInCustomers(ifstream &file) {
-
-}
-
-void Inventory::readInCommands(ifstream &file) {
-
-}
-
-void Inventory::printInventory() {
-
-}
-
-bool Inventory::addMediaType(char mediaID) {
+void Inventory::print() {
     for (int i = 0; i < this->mediaTypes.size(); i++) {
-        if (this->mediaTypes.at(i).getIdentifier() == mediaID) {
-            return false;
+        this->mediaTypes.at(i).print();
+    }
+    cout << "Customers:" << endl;
+    for (int i = 0; i < MAX_CUST; i++) {
+        if (this->customerList[i] != NULL) {
+//            (*this->customerList[i]).print();
         }
-        this->mediaTypes.push_back(MediaType(mediaID));
     }
 }
 
-bool Inventory::addCategory(char id) {
+bool Inventory::addMediaType(char id) {
+    for (int i = 0; i < this->mediaTypes.size(); i++) {
+        if (this->mediaTypes.at(i).getIdentifier() == id) {
+            return false;
+        }
+    }
+    this->mediaTypes.push_back(MediaType(id));
+    return true;
+}
+
+bool Inventory::addCategory(char medID, char catID) {
+    for (int i = 0; i < this->mediaTypes.size(); i++) {
+        if (this->mediaTypes.at(i).getIdentifier() == medID) {
+            return this->mediaTypes.at(i).addCategory(catID);
+        }
+    }
     return false;
 }
 
-bool Inventory::addCustomer(int custID) {
+bool Inventory::isValidCategory(char medID, char catID) {
+    for (int i = 0; i < this->mediaTypes.size(); i++) {
+        if (this->mediaTypes.at(i).getIdentifier() == medID) {
+            return this->mediaTypes.at(i).isValidCategory(catID);
+        }
+    }
+    return false;
+}
+
+bool Inventory::addCustomer(int id, string firstName, string lastName) {
+    if (this->customerList[id] != NULL) {
+        this->customerList[id] = new Customer(id, firstName, lastName);
+        return true;
+    } else {
+        return false;
+    };
+}
+
+bool Inventory::addItem(char medID, char catID, Item* item) {
+    if (item == NULL) {
+        return false;
+    }
+    for (int i = 0; i < this->mediaTypes.size(); i++) {
+        if (this->mediaTypes.at(i).getIdentifier() == medID) {
+            return this->mediaTypes.at(i).addItem(catID, item);
+        }
+    }
     return false;
 }
 

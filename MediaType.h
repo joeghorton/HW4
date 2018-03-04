@@ -29,7 +29,7 @@ public:
     ~MediaType();
 
     //print media type
-    void printMedia();
+    void print();
 
     // returns media type identifier
     char getIdentifier();
@@ -37,8 +37,11 @@ public:
     //renames media type id. Not necessary, just added feature
     void setIdentifier(char mediaID);
 
-    bool addCategory(char categID);
+    bool addCategory(char catID);
 
+    bool isValidCategory(char catID);
+
+    bool addItem(char catID, Item* item);
 };
 
 MediaType::MediaType() {
@@ -53,8 +56,10 @@ MediaType::~MediaType() {
 
 }
 
-void MediaType::printMedia() {
-
+void MediaType::print() {
+    for (int i = 0; i < this->categories.size(); i++) {
+        this->categories.at(i).print();
+    }
 }
 
 char MediaType::getIdentifier() {
@@ -65,13 +70,33 @@ void MediaType::setIdentifier(char mediaID) {
     this->id = mediaID;
 }
 
-bool MediaType::addCategory(char categID) {
+bool MediaType::addCategory(char catID) {
     for (int i = 0; i < this->categories.size(); i++) {
-        if (this->categories.at(i).getIdentifier() == categID) {
+        if (this->categories.at(i).getIdentifier() == catID) {
             return false;
         }
-        this->categories.push_back(Category(categID));
     }
+    this->categories.push_back(Category(catID));
+    return true;
 }
 
+bool MediaType::isValidCategory(char catID) {
+    for (int i = 0; i < this->categories.size(); i++) {
+        if (this->categories.at(i).getIdentifier() == catID) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+bool MediaType::addItem(char catID, Item* item) {
+    for (int i = 0; i < this->categories.size(); i++) {
+        if (this->categories.at(i).getIdentifier() == catID) {
+            this->categories.at(i).insertItem(item);
+            return true;
+        }
+    }
+    return false;
+}
 #endif //ASSIGNMENT4_MEDIATYPE_H

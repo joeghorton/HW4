@@ -23,13 +23,25 @@ public:
     ~ComedyMovie();
 
     // comparison method specific to this class
-    int compareTo();
-    bool operator ==(const ComedyMovie& other) const;
+    bool operator <(const ComedyMovie& other) const;
+    bool operator >(const ComedyMovie& other) const;
 
 };
 
-bool ComedyMovie::operator ==(const ComedyMovie& other) const {
-    return false;
+bool ComedyMovie::operator <(const ComedyMovie& other) const {
+    if (this->title == other.title) { // secondary sort precedence
+        return this->year < other.year;
+    } else { // primary sort precedence
+        return this->title < other.title;
+    }
+}
+
+bool ComedyMovie::operator >(const ComedyMovie& other) const {
+    if (this->title == other.title) { // secondary sort precedence
+        return this->year > other.year;
+    } else { // primary sort precedence
+        return this->title > other.title;
+    }
 }
 
 #endif //ASSIGNMENT4_COMEDYMOVIE_H

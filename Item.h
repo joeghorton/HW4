@@ -15,7 +15,7 @@ using namespace std;
 // since it is already sorted according to this information.
 // This data can be easily added later on if needed.
 
-class Item{
+class Item {
 
 protected:
     int stock; //number of available copies
@@ -35,6 +35,8 @@ public:
     // returns number of these items currently in stock
     int getStock();
 
+    virtual void print();
+
     virtual void addStock(int val);
 
     //returns title
@@ -52,8 +54,6 @@ public:
     // Items must be compared to one another since they need to be
     // sorted. All items will have a specific way to be sorted. Should
     // implement sort in children class.
-    virtual int compareTo(const Item& other) = 0;
-
     virtual bool operator ==(const Item& other) const;
     virtual bool operator <(const Item& other) const;
     virtual bool operator >(const Item& other) const;
@@ -74,7 +74,11 @@ Item::~Item() {
 }
 
 int Item::getStock() {
-    this->stock;
+    return this->stock;
+}
+
+void Item::print() {
+    cout << this->title << endl;
 }
 
 void Item::addStock(int val) {

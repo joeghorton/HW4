@@ -19,6 +19,7 @@ private:
 
     // helper methods
     TreeNode* insertItem(Item* item, TreeNode* root);
+    void print(TreeNode* root);
 
 public:
 
@@ -32,7 +33,7 @@ public:
 
     //print the current inventory in this category.
     // traverse overall root
-    void printCategory();
+    void print();
 
     // inserts item into the root.
     // pre: item is same type as other items in this category
@@ -48,14 +49,28 @@ Category::Category() {
 
 Category::Category(char categID) {
     this->id = categID;
+    this->overallRoot = NULL;
 }
 
 Category::~Category() {
 
 }
 
-void Category::printCategory() {
+char Category::getIdentifier() {
+    return this->id;
+}
 
+void Category::print() {
+    cout << this->id << endl;
+    print(this->overallRoot);
+}
+
+void Category::print(TreeNode* root) {
+    if (root != NULL) {
+        print(root->left);
+        root->item->print();
+        print(root->right);
+    }
 }
 
 void Category::insertItem(Item* item) {
@@ -65,17 +80,16 @@ void Category::insertItem(Item* item) {
 TreeNode* Category::insertItem(Item* item, TreeNode* root) {
     if (root == NULL) {
         root = new TreeNode();
-        root->val = item;
-    } else if (*root->val == *item)) {
-        root->val->addStock(item->getStock());
-        delete item;
-    } else if ((*root->val) < *item) {
-
+        root->item = item;
+    } else if (*root->item < *item) {
+        root->left = insertItem(item, root->left);
+    } else if (*root->item > *item) {
+        root->right = insertItem(item, root->right);
+    } else { // items are equal
+        root->item->addStock(item->getStock());
+        //delete item;
     }
-}
-
-char Category::getIdentifier() {
-    return this->id;
+    return root;
 }
 
 #endif //ASSIGNMENT4_CATEGORY_H

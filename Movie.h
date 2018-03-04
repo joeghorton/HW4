@@ -10,7 +10,7 @@
 // The movie class is used to store a general movie description.
 // The class extends Item, because it is an item stored within the
 // Movie store's inventory.
-// This movie class contains the releaseYear, director, title, and number
+// This movie class contains the year, director, title, and number
 // of copies it has in the inventory.
 // This movies class contains a compareTo method to compare this movie
 // with other movies. It is a generic comparison method, first comparing
@@ -20,7 +20,7 @@
 class Movie : public Item {
 
 protected:
-    int releaseYear; //year movie was released
+    int year; //year movie was released
     string director; //director name
 
 public:
@@ -30,7 +30,7 @@ public:
 
     Movie(string title, int stock, string director, int year) : Item(stock, title) {
         this->director = director;
-        this->releaseYear = year;
+        this->year = year;
     };
 
     //destructor
@@ -42,11 +42,11 @@ public:
     // returns year the movie was released
     int getReleaseYear();
 
+    void print();
+
     // default compare to for movie;
     // compare title then release year for generic movie.
     // Override when desired.
-    virtual int compareTo() = 0;
-
     virtual bool operator ==(const Movie& other) const;
     virtual bool operator <(const Movie& other) const;
     virtual bool operator >(const Movie& other) const;
@@ -66,15 +66,15 @@ string Movie::getDirector() {
 }
 
 int Movie::getReleaseYear() {
-    return this->releaseYear;
+    return this->year;
 }
 
-int Movie::compareTo() {
-    return 0;
+void Movie::print() {
+    cout << this->stock << " " << this->title << " " << "(" << this->year << ")" << endl;
 }
 
 bool Movie::operator ==(const Movie& other) const {
-    return (this->releaseYear == other.releaseYear &&
+    return (this->year == other.year &&
             this->director == other.director &&
             this->title == other.title);
 }
