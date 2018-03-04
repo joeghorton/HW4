@@ -17,13 +17,19 @@ class ComedyMovie: public Movie {
 public:
 
     //constructor
-    ComedyMovie();
+    ComedyMovie(string title, int stock, string director, int year) : Movie(title, stock, director, year) {};
 
     //destructor
     ~ComedyMovie();
 
     // comparison method specific to this class
     int compareTo();
+    bool operator ==(const ComedyMovie& other) const;
+
 };
+
+bool ComedyMovie::operator ==(const ComedyMovie& other) const {
+    return false;
+}
 
 #endif //ASSIGNMENT4_COMEDYMOVIE_H

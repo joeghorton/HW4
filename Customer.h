@@ -5,6 +5,7 @@
 #include "RentalNode.h"
 #include <string>
 #include <iostream>
+using namespace std;
 
 // The Customer class stores all necessary information
 // about each customer. It stores a unique customerdId which is used
@@ -18,21 +19,51 @@
 class Customer{
 
 private:
-    int customerId; //4 digit customer ID
-    std::string firstName; //first name
-    std::string lastName; //last name
+    int id; //4 digit customer ID
+    string firstName; //first name
+    string lastName; //last name
     RentalNode* history; //history of rentals.
 
 public:
 
+    // constructor
+    Customer(int id, string firstName, string lastName);
+
     // simple features
     int getID();
-    std::string getFirstName();
-    std::string getLastName();
+    string getFirstName();
+    string getLastName();
 
     // prints out customer history in order of most recently checked out
     void displayHistory();
 
 };
+
+Customer::Customer(int id, string firstName, string lastName) {
+    this->id = id;
+    this->firstName = firstName;
+    this->lastName = lastName;
+    this->history = NULL;
+}
+
+int Customer::getID() {
+    return this->id;
+}
+
+string Customer::getFirstName() {
+    return this->firstName;
+}
+
+string Customer::getLastName() {
+    return this->lastName;
+}
+
+void Customer::displayHistory() {
+    RentalNode *cur = this->history;
+    while (cur != NULL) {
+        cur->printItem();
+        cur = cur->nextRental;
+    }
+}
 
 #endif //ASSIGNMENT4_CUSTOMER_H

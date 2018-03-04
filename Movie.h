@@ -17,22 +17,27 @@
 // the titles, then release years. However, this should be overridden in
 // more specific move classes if a different comparison is desired.
 
-class Movie: public Item{
+class Movie : public Item {
 
 protected:
     int releaseYear; //year movie was released
-    std::string director; //director name
+    string director; //director name
 
 public:
 
     // constructor
     Movie();
 
+    Movie(string title, int stock, string director, int year) : Item(stock, title) {
+        this->director = director;
+        this->releaseYear = year;
+    };
+
     //destructor
-    ~Move();
+    ~Movie();
 
     // returns name of director
-    std::string getDirector();
+    string getDirector();
 
     // returns year the movie was released
     int getReleaseYear();
@@ -40,8 +45,47 @@ public:
     // default compare to for movie;
     // compare title then release year for generic movie.
     // Override when desired.
-    int compareTo();
+    virtual int compareTo() = 0;
+
+    virtual bool operator ==(const Movie& other) const;
+    virtual bool operator <(const Movie& other) const;
+    virtual bool operator >(const Movie& other) const;
+
 };
+
+Movie::Movie() {
+
+}
+
+Movie::~Movie() {
+
+}
+
+string Movie::getDirector() {
+    return this->director;
+}
+
+int Movie::getReleaseYear() {
+    return this->releaseYear;
+}
+
+int Movie::compareTo() {
+    return 0;
+}
+
+bool Movie::operator ==(const Movie& other) const {
+    return (this->releaseYear == other.releaseYear &&
+            this->director == other.director &&
+            this->title == other.title);
+}
+
+bool Movie::operator <(const Movie& other) const {
+    return false;
+}
+
+bool Movie::operator >(const Movie& other) const {
+    return false;
+}
 
 
 #endif //ASSIGNMENT4_MOVIE_H

@@ -11,13 +11,10 @@
 
 class TreeNode{
 
-
-private:
-    Item* item; // points to specific item within
+public:
+    Item* val; // points to specific item within
     TreeNode* left; // points to TreeNodes that are 'less than' this one
     TreeNode* right; // points to TreeNodes that are 'greater than' this one
-
-public:
 
     // constructor
     TreeNode();

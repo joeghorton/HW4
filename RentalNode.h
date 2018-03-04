@@ -15,12 +15,13 @@ class RentalNode{
 private:
     Item* item; // the particular item rented
     bool returned; //signifies if borrowed or returned
-    RentalNode* nextRental; //next rental in history
+
 
 public:
+    RentalNode* nextRental; //next rental in history
 
     //constructor
-    RentalNode();
+    RentalNode(Item* item);
 
     // destructor
     ~RentalNode();
@@ -33,6 +34,23 @@ public:
     // const because Item is stored in pointer and we dont want
     // to mess with data
     void printItem() const;
+
 };
+
+RentalNode::RentalNode(Item *item) {
+
+}
+
+RentalNode::~RentalNode() {
+
+}
+
+bool RentalNode::wasReturned() {
+    return this->returned;
+}
+
+void RentalNode::printItem() const {
+
+}
 
 #endif //ASSIGNMENT4_RENTALNODE_H

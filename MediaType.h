@@ -12,7 +12,7 @@ using namespace std;
 // is used to idenfity its position in the inventory list and act as
 // a filter for invalid identifiers.
 
-class MediaType{
+class MediaType {
 
 private:
     char id; //used to categorize the media type
@@ -36,6 +36,8 @@ public:
 
     //renames media type id. Not necessary, just added feature
     void setIdentifier(char mediaID);
+
+    bool addCategory(char categID);
 
 };
 
@@ -61,6 +63,15 @@ char MediaType::getIdentifier() {
 
 void MediaType::setIdentifier(char mediaID) {
     this->id = mediaID;
+}
+
+bool MediaType::addCategory(char categID) {
+    for (int i = 0; i < this->categories.size(); i++) {
+        if (this->categories.at(i).getIdentifier() == categID) {
+            return false;
+        }
+        this->categories.push_back(Category(categID));
+    }
 }
 
 #endif //ASSIGNMENT4_MEDIATYPE_H

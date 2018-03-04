@@ -16,14 +16,22 @@ class DramaMovie : public Movie {
 public:
 
     // constructor
-    DramaMovie();
+    DramaMovie(string title, int stock, string director, int year) : Movie(title, stock, director, year) {};
 
     // destructor
-    ~DramaMove();
+    ~DramaMovie();
 
     // comparison method specific to this type of movie
-    int compareTo();
+    int compareTo(const DramaMovie &other);
 };
+
+DramaMovie::~DramaMovie() {
+
+}
+
+int DramaMovie::compareTo(const DramaMovie &other) {
+    return 0;
+}
 
 
 #endif //ASSIGNMENT4_DRAMAMOVIE_H
