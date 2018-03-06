@@ -16,7 +16,7 @@ class DramaMovie : public Movie {
 public:
 
     // constructor
-    DramaMovie(string title, int stock, string director, int year) : Movie(title, stock, director, year) {};
+    DramaMovie(string title, string director, int year) : Movie(title, director, year) {};
 
     // destructor
     ~DramaMovie();

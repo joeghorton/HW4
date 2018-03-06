@@ -2,7 +2,7 @@
 #ifndef ASSIGNMENT4_CATEGORY_H
 #define ASSIGNMENT4_CATEGORY_H
 #include "MediaType.h"
-#include "TreeNode.h"
+#include "ShelfNode.h"
 
 // The category class is used as the second part of a
 // 2 part organizer. This class is used to only store
@@ -15,11 +15,11 @@ class Category {
 
 private:
     char id; //genre identifier.
-    TreeNode* overallRoot; // pointer to items in this specific category
+    ShelfNode* overallRoot; // pointer to items in this specific category
 
     // helper methods
-    TreeNode* insertItem(Item* item, TreeNode* root);
-    void print(TreeNode* root);
+    ShelfNode* insertItem(Item* item, int stock, ShelfNode* root);
+    void print(ShelfNode* root);
 
 public:
 
@@ -37,7 +37,7 @@ public:
 
     // inserts item into the root.
     // pre: item is same type as other items in this category
-    void insertItem(Item* item);
+    void insertItem(Item* item, int stock);
 
     char getIdentifier();
 
@@ -65,28 +65,31 @@ void Category::print() {
     print(this->overallRoot);
 }
 
-void Category::print(TreeNode* root) {
+void Category::print(ShelfNode* root) {
     if (root != NULL) {
         print(root->left);
-        root->item->print();
+        root->print();
         print(root->right);
     }
 }
 
-void Category::insertItem(Item* item) {
-    this->overallRoot = insertItem(item, this->overallRoot);
+void Category::insertItem(Item* item, int stock) {
+    if (item != NULL) {
+        this->overallRoot = insertItem(item, stock, this->overallRoot);
+    } else {
+        cout << "ERROR: NULL ITEM" << endl;
+    }
 }
 
-TreeNode* Category::insertItem(Item* item, TreeNode* root) {
+ShelfNode* Category::insertItem(Item* item, int stock, ShelfNode* root) {
     if (root == NULL) {
-        root = new TreeNode();
-        root->item = item;
+        root = new ShelfNode(item, stock);
     } else if (*root->item < *item) {
-        root->left = insertItem(item, root->left);
+        root->left = insertItem(item, stock, root->left);
     } else if (*root->item > *item) {
-        root->right = insertItem(item, root->right);
+        root->right = insertItem(item, stock, root->right);
     } else { // items are equal
-        root->item->addStock(item->getStock());
+        root->addStock(stock);
         //delete item;
     }
     return root;

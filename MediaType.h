@@ -41,7 +41,8 @@ public:
 
     bool isValidCategory(char catID);
 
-    bool addItem(char catID, Item* item);
+    bool addItem(char catID, Item* item, int stock);
+
 };
 
 MediaType::MediaType() {
@@ -90,10 +91,10 @@ bool MediaType::isValidCategory(char catID) {
 }
 
 
-bool MediaType::addItem(char catID, Item* item) {
+bool MediaType::addItem(char catID, Item* item, int stock) {
     for (int i = 0; i < this->categories.size(); i++) {
         if (this->categories.at(i).getIdentifier() == catID) {
-            this->categories.at(i).insertItem(item);
+            this->categories.at(i).insertItem(item, stock);
             return true;
         }
     }

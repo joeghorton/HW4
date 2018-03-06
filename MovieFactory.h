@@ -15,28 +15,28 @@
 class MovieFactory {
 
 public:
-    Movie* createMovie(char category, int stock, string director, string title, int year);
+    Movie* createMovie(char category, string director, string title, int year);
 
-    Movie* createClassicalMovie(int stock, string director, string title, string actorFirst,
+    Movie* createClassicalMovie(string director, string title, string actorFirst,
                                         string actorLast, int month, int year);
 
 
 };
 
 
-Movie* MovieFactory::createMovie(char category, int stock, string director, string title, int year) {
+Movie* MovieFactory::createMovie(char category, string director, string title, int year) {
     if (category == 'F') {
-        return new ComedyMovie(title, stock, director, year);
+        return new ComedyMovie(title, director, year);
     } else if (category == 'D') {
-        return new DramaMovie(title, stock, director, year);
+        return new DramaMovie(title, director, year);
     } else {
         return NULL;
     }
 }
 
-Movie* MovieFactory::createClassicalMovie(int stock, string director, string title, string actorFirst, string actorLast,
+Movie* MovieFactory::createClassicalMovie(string director, string title, string actorFirst, string actorLast,
                                                 int month, int year) {
-    return new ClassicalMovie(title, stock, director, year, month, actorFirst, actorLast);
+    return new ClassicalMovie(title, director, year, month, actorFirst, actorLast);
 }
 
 

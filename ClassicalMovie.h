@@ -24,8 +24,8 @@ protected:
 public:
 
     //constructor
-    ClassicalMovie(string title, int stock, string director, int year, int month, string actorFirst,
-                   string actorLast) : Movie(title, stock, director, year) {
+    ClassicalMovie(string title, string director, int year, int month, string actorFirst,
+                   string actorLast) : Movie(title, director, year) {
         //this->actorNames.push_back(actorFirst);
         //this->actorNames.push_back(actorLast);
         this->actorFirst = actorFirst;

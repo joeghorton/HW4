@@ -2,7 +2,7 @@
 #ifndef ASSIGNMENT4_CUSTOMER_H
 #define ASSIGNMENT4_CUSTOMER_H
 
-#include "RentalNode.h"
+#include "HistoryNode.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -22,7 +22,7 @@ private:
     int id; //4 digit customer ID
     string firstName; //first name
     string lastName; //last name
-    RentalNode* history; //history of rentals.
+    HistoryNode* history; //history of rentals.
 
 public:
 
@@ -60,7 +60,7 @@ string Customer::getLastName() {
 }
 
 void Customer::displayHistory() {
-    RentalNode* cur = this->history;
+    HistoryNode* cur = this->history;
     while (cur != NULL) {
         cur->printItem();
         cur = cur->nextRental;

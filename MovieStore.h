@@ -18,6 +18,7 @@ public:
 
     // constructors
     MovieStore();
+
     ~MovieStore();
 
     bool addMovie(char category, int stock, string director, string title,
@@ -66,7 +67,7 @@ void MovieStore::readInInventory(ifstream& input) {
         } else { // invalid category
             string temp; // gets rid of line with invalid type
             getline(input, temp);
-            cout << "ERROR MESSAGE 2" << endl;
+            cout << "ERROR: INVALID MOVIE TYPE" << endl;
         }
     }
 }
@@ -107,20 +108,22 @@ void MovieStore::readInCommands(ifstream& input) {
             } else if (type == 'R') {
 
             } else {
-                cout << "ERROR MESSAGE 3" << endl;
+                cout << "ERROR: INVALID COMMAND" << endl;
             }
         }
     }
 }
 
+
 bool MovieStore::addMovie(char category, int stock, string director, string title, string actorFirst, string actorLast,
                                 int month, int year) {
     if (category == 'C') {
-        return addItem('D', category, factory.createClassicalMovie(stock, director, title, actorFirst, actorLast, month, year));
+        return addItem('D', category, factory.createClassicalMovie(director, title, actorFirst, actorLast, month, year), stock);
     } else {
-        return addItem('D', category, factory.createMovie(category, stock, director, title, year));
+        return addItem('D', category, factory.createMovie(category, director, title, year), stock);
     }
 }
+
 
 bool MovieStore::rentMovieFromInput(char medID, char catID, int custID, ifstream& input) {
     if (catID == 'C') {
@@ -130,7 +133,7 @@ bool MovieStore::rentMovieFromInput(char medID, char catID, int custID, ifstream
         input >> year;
         input >> actorFirst;
         input >> actorLast;
-        Movie* movie = factory.createClassicalMovie(1, "", "", actorFirst, actorLast, month, year);
+        Movie* movie = factory.createClassicalMovie("", "", actorFirst, actorLast, month, year);
         if (!actionHandler.addRental(movie, custID)) {
             cout << "ERROR: MOVIE NO EXIST" << endl;
         }

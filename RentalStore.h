@@ -38,7 +38,7 @@ public:
 
     Customer* getCustomer(int id);
 
-    bool addItem(char medID, char catID, Item* item);
+    bool addItem(char medID, char catID, Item* item, int stock);
 
     Item* getItem(Item* item);
 
@@ -112,20 +112,20 @@ Customer* RentalStore::getCustomer(int id) {
 }
 
 
-bool RentalStore::addItem(char medID, char catID, Item* item) {
+bool RentalStore::addItem(char medID, char catID, Item* item, int stock) {
     if (item == NULL) {
         return false;
     }
     for (int i = 0; i < this->mediaTypes.size(); i++) {
         if (this->mediaTypes.at(i).getIdentifier() == medID) {
-            return this->mediaTypes.at(i).addItem(catID, item);
+            return this->mediaTypes.at(i).addItem(catID, item, stock);
         }
     }
     return false;
 }
 
 Item* RentalStore::getItem(Item* item) {
-
+    return NULL;
 }
 
 #endif //ASSIGNMENT4_INVENTORY_H

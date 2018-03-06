@@ -13,11 +13,10 @@
 
 class ComedyMovie: public Movie {
 
-
 public:
 
     //constructor
-    ComedyMovie(string title, int stock, string director, int year) : Movie(title, stock, director, year) {};
+    ComedyMovie(string title, string director, int year) : Movie(title, director, year) {};
 
     //destructor
     ~ComedyMovie();
@@ -29,7 +28,7 @@ public:
 
 };
 
-bool ComedyMovie::operator==(const ComedyMovie &other) const {
+bool ComedyMovie::operator ==(const ComedyMovie &other) const {
     return false;
 }
 

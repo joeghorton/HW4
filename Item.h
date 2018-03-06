@@ -18,7 +18,8 @@ using namespace std;
 class Item {
 
 protected:
-    int stock; //number of available copies
+
+    //int stock; //number of available copies
     string title; //items must have some sort of title
 
 
@@ -27,28 +28,15 @@ public:
     //constructor
     Item();
 
-    Item (int stock, string title);
+    Item(string title);
 
     //destructor
     ~Item();
 
-    // returns number of these items currently in stock
-    int getStock();
-
     virtual void print();
-
-    virtual void addStock(int val);
 
     //returns title
     string getTitle();
-
-    //returns true if successfully borrowed.
-    //may modify later to print if only error.
-    bool borrowItem();
-
-    //returns true if successfully returned.
-    //may modify later to print if only error
-    bool returnItem();
 
 
     // Items must be compared to one another since they need to be
@@ -64,8 +52,7 @@ Item::Item() {
 
 }
 
-Item::Item(int stock, string title) {
-    this->stock = stock;
+Item::Item(string title) {
     this->title = title;
 }
 
@@ -73,28 +60,14 @@ Item::~Item() {
 
 }
 
-int Item::getStock() {
-    return this->stock;
-}
 
 void Item::print() {
-    cout << this->title << endl;
+    cout << this->title;
 }
 
-void Item::addStock(int val) {
-    this->stock += val;
-}
 
 string Item::getTitle() {
     return this->title;
-}
-
-bool Item::borrowItem() {
-    return false;
-}
-
-bool Item::returnItem() {
-    return false;
 }
 
 bool Item::operator ==(const Item& other) const {

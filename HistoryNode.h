@@ -4,27 +4,26 @@
 
 #include "Item.h"
 
-// RentalNode is used to keep track of an individual customer's
+// HistoryNode is used to keep track of an individual customer's
 // transactions and whether the item was borrowed or returned.
 // This class is used only as a basis for keeping
 // the transactions organize. It does not serve any other purpose
 // so it does not include many features.
 
-class RentalNode {
+class HistoryNode {
 
 private:
     Item* item; // the particular item rented
     bool returned; //signifies if borrowed or returned
 
-
 public:
-    RentalNode* nextRental; //next rental in history
+    HistoryNode* nextRental; //next rental in history
 
     //constructor
-    RentalNode(Item* item, bool returned);
+    HistoryNode(Item* item, bool returned);
 
     // destructor
-    ~RentalNode();
+    ~HistoryNode();
 
     // signifies if returned.
     // returns true if a return. false if borrow
@@ -37,20 +36,20 @@ public:
 
 };
 
-RentalNode::RentalNode(Item* item, bool returned) {
+HistoryNode::HistoryNode(Item* item, bool returned) {
     this->item = item;
     this->returned = returned;
 }
 
-RentalNode::~RentalNode() {
+HistoryNode::~HistoryNode() {
 
 }
 
-bool RentalNode::wasReturned() {
+bool HistoryNode::wasReturned() {
     return this->returned;
 }
 
-void RentalNode::printItem() const {
+void HistoryNode::printItem() const {
     if (this->returned) {
         cout << "Returned: ";
     } else {

@@ -28,7 +28,8 @@ public:
     // constructor
     Movie();
 
-    Movie(string title, int stock, string director, int year) : Item(stock, title) {
+    // constructor
+    Movie(string title, string director, int year) : Item(title) {
         this->director = director;
         this->year = year;
     };
@@ -70,7 +71,7 @@ int Movie::getReleaseYear() {
 }
 
 void Movie::print() {
-    cout << this->stock << " " << this->title << " " << "(" << this->year << ")" << endl;
+    cout << this->title << " " << "(" << this->year << ")";
 }
 
 bool Movie::operator ==(const Movie& other) const {
@@ -80,11 +81,19 @@ bool Movie::operator ==(const Movie& other) const {
 }
 
 bool Movie::operator <(const Movie& other) const {
-    return false;
+    if (this->title < other.title) {
+        return true;
+    } else {
+        return this->year < other.year;
+    }
 }
 
 bool Movie::operator >(const Movie& other) const {
-    return false;
+    if (this->title > other.title) {
+        return true;
+    } else {
+        return this->year > other.year;
+    }
 }
 
 
