@@ -10,7 +10,7 @@
 // the transactions organize. It does not serve any other purpose
 // so it does not include many features.
 
-class RentalNode{
+class RentalNode {
 
 private:
     Item* item; // the particular item rented
@@ -21,7 +21,7 @@ public:
     RentalNode* nextRental; //next rental in history
 
     //constructor
-    RentalNode(Item* item);
+    RentalNode(Item* item, bool returned);
 
     // destructor
     ~RentalNode();
@@ -37,8 +37,9 @@ public:
 
 };
 
-RentalNode::RentalNode(Item *item) {
-
+RentalNode::RentalNode(Item* item, bool returned) {
+    this->item = item;
+    this->returned = returned;
 }
 
 RentalNode::~RentalNode() {
@@ -50,6 +51,12 @@ bool RentalNode::wasReturned() {
 }
 
 void RentalNode::printItem() const {
+    if (this->returned) {
+        cout << "Returned: ";
+    } else {
+        cout << "Borrowed: ";
+    }
+    this->item->print();
 
 }
 

@@ -60,7 +60,7 @@ string Customer::getLastName() {
 }
 
 void Customer::displayHistory() {
-    RentalNode *cur = this->history;
+    RentalNode* cur = this->history;
     while (cur != NULL) {
         cur->printItem();
         cur = cur->nextRental;

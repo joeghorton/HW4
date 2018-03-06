@@ -9,7 +9,8 @@ using namespace std;
 
 
 
-class Inventory {
+class RentalStore {
+
     static const int MAX_CUST = 10000; //customers have a 4 digit ID
 
 private:
@@ -21,8 +22,8 @@ private:
     vector<MediaType> mediaTypes;
 
 public:
-    Inventory(); //empty constructor
-    ~Inventory();
+    RentalStore(); //empty constructor
+    virtual ~RentalStore();
 
 
     void print();
@@ -35,31 +36,38 @@ public:
 
     bool addCustomer(int id, string firstName, string lastName); // used to add customer to database.
 
+    Customer* getCustomer(int id);
+
     bool addItem(char medID, char catID, Item* item);
+
+    Item* getItem(Item* item);
 
 };
 
-Inventory::Inventory() {
+RentalStore::RentalStore() {
     //this->mediaTypes = new vector<MediaType>();
+    for (int i = 0; i < MAX_CUST; i++) {
+        customerList[i] = NULL;
+    }
 }
 
-Inventory::~Inventory() {
+RentalStore::~RentalStore() {
 
 }
 
-void Inventory::print() {
+void RentalStore::print() {
     for (int i = 0; i < this->mediaTypes.size(); i++) {
         this->mediaTypes.at(i).print();
     }
     cout << "Customers:" << endl;
     for (int i = 0; i < MAX_CUST; i++) {
         if (this->customerList[i] != NULL) {
-//            (*this->customerList[i]).print();
+            (*this->customerList[i]).print();
         }
     }
 }
 
-bool Inventory::addMediaType(char id) {
+bool RentalStore::addMediaType(char id) {
     for (int i = 0; i < this->mediaTypes.size(); i++) {
         if (this->mediaTypes.at(i).getIdentifier() == id) {
             return false;
@@ -69,7 +77,7 @@ bool Inventory::addMediaType(char id) {
     return true;
 }
 
-bool Inventory::addCategory(char medID, char catID) {
+bool RentalStore::addCategory(char medID, char catID) {
     for (int i = 0; i < this->mediaTypes.size(); i++) {
         if (this->mediaTypes.at(i).getIdentifier() == medID) {
             return this->mediaTypes.at(i).addCategory(catID);
@@ -78,7 +86,7 @@ bool Inventory::addCategory(char medID, char catID) {
     return false;
 }
 
-bool Inventory::isValidCategory(char medID, char catID) {
+bool RentalStore::isValidCategory(char medID, char catID) {
     for (int i = 0; i < this->mediaTypes.size(); i++) {
         if (this->mediaTypes.at(i).getIdentifier() == medID) {
             return this->mediaTypes.at(i).isValidCategory(catID);
@@ -87,16 +95,24 @@ bool Inventory::isValidCategory(char medID, char catID) {
     return false;
 }
 
-bool Inventory::addCustomer(int id, string firstName, string lastName) {
-    if (this->customerList[id] != NULL) {
+bool RentalStore::addCustomer(int id, string firstName, string lastName) {
+    if (this->customerList[id] == NULL) {
         this->customerList[id] = new Customer(id, firstName, lastName);
         return true;
     } else {
         return false;
-    };
+    }
 }
 
-bool Inventory::addItem(char medID, char catID, Item* item) {
+Customer* RentalStore::getCustomer(int id) {
+    if (this->customerList[id] == NULL) {
+        cout << "ERROR: INVALID CUSTOMER" << endl;
+    }
+    return this->customerList[id];
+}
+
+
+bool RentalStore::addItem(char medID, char catID, Item* item) {
     if (item == NULL) {
         return false;
     }
@@ -106,6 +122,10 @@ bool Inventory::addItem(char medID, char catID, Item* item) {
         }
     }
     return false;
+}
+
+Item* RentalStore::getItem(Item* item) {
+
 }
 
 #endif //ASSIGNMENT4_INVENTORY_H

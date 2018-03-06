@@ -5,14 +5,16 @@
 #ifndef ASSIGNMENT4_MOVIESTORE_H
 #define ASSIGNMENT4_MOVIESTORE_H
 
-#include "Inventory.h"
+#include "RentalStore.h"
 #include "MovieFactory.h"
+#include "ActionHandler.h"
 
-class MovieStore : public Inventory {
+class MovieStore : public RentalStore {
 
 public:
 
     MovieFactory factory;
+    ActionHandler actionHandler;
 
     // constructors
     MovieStore();
@@ -20,6 +22,8 @@ public:
 
     bool addMovie(char category, int stock, string director, string title,
                   string actorFirst, string actorLast, int month, int year);
+
+    bool rentMovieFromInput(char medID, char catID, int custID, ifstream& input);
 
     void readInInventory(ifstream& input); //read in inventory from file
     void readInCustomers(ifstream& input); //read in customers from file
@@ -79,7 +83,34 @@ void MovieStore::readInCustomers(ifstream& input) {
 }
 
 void MovieStore::readInCommands(ifstream& input) {
+    char type = ' ';
+    input >> type;
+    if (type == 'I') {
+        print();
+    } else {
+        int id = -1;
+        input >> id;
+        if (type == 'H') { // print customer history
+            Customer* cust = getCustomer(id);
+            if (cust != NULL) {
+                cust->displayHistory();
+            }
+        } else {
+            char mediaType = ' ';
+            char category = ' ';
+            input >> mediaType;
+            input >> category;
+            if (type == 'B') {
+                if (!rentMovieFromInput(mediaType, category, id, input)) {
+                    cout << "ERROR: CAN'T RENT" << endl;
+                }
+            } else if (type == 'R') {
 
+            } else {
+                cout << "ERROR MESSAGE 3" << endl;
+            }
+        }
+    }
 }
 
 bool MovieStore::addMovie(char category, int stock, string director, string title, string actorFirst, string actorLast,
@@ -91,5 +122,25 @@ bool MovieStore::addMovie(char category, int stock, string director, string titl
     }
 }
 
+bool MovieStore::rentMovieFromInput(char medID, char catID, int custID, ifstream& input) {
+    if (catID == 'C') {
+        int month = 0, year = 0;
+        string actorFirst = "", actorLast = "";
+        input >> month;
+        input >> year;
+        input >> actorFirst;
+        input >> actorLast;
+        Movie* movie = factory.createClassicalMovie(1, "", "", actorFirst, actorLast, month, year);
+        if (!actionHandler.addRental(movie, custID)) {
+            cout << "ERROR: MOVIE NO EXIST" << endl;
+        }
+    } else if (catID == 'F') {
+
+    } else if (catID == 'D') {
+
+    } else {
+        cout << "ERROR: INVALID CATEGORY RENTAL" << endl;
+    }
+}
 
 #endif //ASSIGNMENT4_MOVIESTORE_H

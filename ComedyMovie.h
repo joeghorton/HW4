@@ -23,10 +23,15 @@ public:
     ~ComedyMovie();
 
     // comparison method specific to this class
+    bool operator ==(const ComedyMovie& other) const;
     bool operator <(const ComedyMovie& other) const;
     bool operator >(const ComedyMovie& other) const;
 
 };
+
+bool ComedyMovie::operator==(const ComedyMovie &other) const {
+    return false;
+}
 
 bool ComedyMovie::operator <(const ComedyMovie& other) const {
     if (this->title == other.title) { // secondary sort precedence
@@ -43,5 +48,7 @@ bool ComedyMovie::operator >(const ComedyMovie& other) const {
         return this->title > other.title;
     }
 }
+
+
 
 #endif //ASSIGNMENT4_COMEDYMOVIE_H
